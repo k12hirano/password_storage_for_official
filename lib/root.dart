@@ -14,7 +14,7 @@ class Root extends StatefulWidget {
 
 class _RootState extends State<Root>  with WidgetsBindingObserver  {
 
-  final fontsize = 16;
+  final fontsize = 17;
   final iconsize = 13;
   int choice;
   int setting;
@@ -255,293 +255,266 @@ class _RootState extends State<Root>  with WidgetsBindingObserver  {
         }
       }
     }
-    
 
-    return Scaffold(
-        backgroundColor: Colors.cyan[100],
-        appBar: AppBar(
-          elevation: 8,
-          leading:(deleteon==false)?Padding(
-              padding:EdgeInsets.all(4.0),
-              child:PopupMenuButton(
-                color: Colors.amber[100],
-                icon: Icon(Icons.settings),
-                initialValue: setting,
-                onSelected: (value){
-                  setState(() {
-                    if(value == 1){
-                      if(display2==false&&display3==false&&display4==false&&display5==false){}else{
-                      if(display1==true){
-                        displayOn1(false);display1=false;}
-                      else{displayOn1(true);display1=true;}}
-                    }else  if(value == 2){
-                      if(display1==false&&display3==false&&display4==false&&display5==false){}else{
-                      if(display2==true){
-                        displayOn2(false);display2=false;
-                      }else{displayOn2(true);display2=true;}}
-                    }else if(value == 3){
-                      if(display1==false&&display2==false&&display4==false&&display5==false){}else{
-                      if(display3==true){
-                        displayOn3(false);display3=false;}
-                      else{displayOn3(true);display3=true;}}
-                    }else if(value == 4){
-                      if(display1==false&&display2==false&&display3==false&&display5==false){}else{
-                      if(display4==true){
-                        displayOn4(false);display4=false;}
-                      else{displayOn4(true);display4=true;}}
-                    }else if(value == 5){
-                      if(display1==false&&display2==false&&display3==false&&display4==false){}else{
-                      if(display5==true){
-                        displayOn5(false);display5=false;}
-                      else{displayOn5(true);display5=true;}}
-                    }
-                    displayCount();
-                    streamIn();
-                });
-                },
-                itemBuilder: (BuildContext context) {
-                  return[
-                    PopupMenuItem(
-                        child:  Row(children: <Widget>[
-                          Text('Title'),
-                          SizedBox(width: width*0.05),
-                          (display1)?Icon(Icons.check,color: Colors.brown[700])
-                              :Container()
-                        ]),
-                        value: 1
-                    ),
-                    PopupMenuItem(
-                        child: Row(children: <Widget>[
-                          Text('ID'),
-                          SizedBox(width: width*0.05,),
-                          (display2)?Icon(Icons.check,color: Colors.brown[700])
-                              :Container()
-                        ]),
-                        value: 2
-                    ),
-                    PopupMenuItem(
-                        child:  Row(children: <Widget>[
-                          Text('Password'),
-                          SizedBox(width: width*0.05),
-                          (display3)?Icon(Icons.check,color: Colors.brown[700])
-                              :Container()
-                        ]),
-                        value: 3
-                    ),
-                    PopupMenuItem(
-                        child:  Row(children: <Widget>[
-                          Text('URL'),
-                          SizedBox(width: width*0.05,),
-                          (display4)?Icon(Icons.check,color: Colors.brown[700])
-                              :Container()
-                        ]),
-                        value: 4
-                    ),
-                    PopupMenuItem(
-                      child: Row(children: <Widget>[
-                        Text('Memo'),
-                        SizedBox(width: width*0.05),
-                        (display5)?Icon(Icons.check,color: Colors.brown[700])
-                            :Container()
-                      ]),
-                      value: 5,)
-                  ];
-                },
-              )
-          ):Container(),
-          centerTitle: true,
-          title:Text("PASSWORDLIST",style: TextStyle(color: Colors.yellow[200])),
-          backgroundColor: Colors.brown[800],
-          actions: [
-            Padding(
-              padding: const EdgeInsets.all(4.0),
-              child:PopupMenuButton(
-                color: Colors.amber[100],
-                icon: Icon(Icons.shuffle),
-                initialValue: choice,
-                onSelected: (value){
-                  setState(() {
-                    if(choice==null){choice=1;}
-                    var karioki=choice;
-                    print(karioki);
-                    if(value!=5){
-                    choice = value;}
-                    print(choice);
-                    if(value==5){choice=karioki;print(choice);print(karioki);
-                    if(favoriteOnly==false){favoriteOnly=true;}else{favoriteOnly=false;}
-                    }
-                    if(value!=5){
-                    chosen(value);}
-                    streamIn();
-                  });
-                },
-                itemBuilder: (BuildContext context) {
-                  return[
-                    PopupMenuItem(
-                        child: Text('Date'),
-                        value: 1,
-                        enabled: (choice==1)?false:true),
-                    PopupMenuItem(
-                      child: Text('Name(title)'),
-                      value: 2,
-                      enabled: (choice==2)?false:true,
-                    ),
-                    PopupMenuItem(
-                      child: Text('Name(ID)'),
-                      value: 3,
-                      enabled: (choice==3)?false:true,
-                    ),
-                    PopupMenuItem(
-                      child: Text('Name(pass)'),
-                      value: 4,
-                      enabled: (choice==4)?false:true,
-                    ),
-                    (favoriteOnly==true) ?PopupMenuItem(
-                      child: Row(children: <Widget>[
-                        Text('favorite'),
-                        SizedBox(width: width*0.05,),
-                        Icon(Icons.check,color: Colors.brown[800],)
-                      ]),
-                      value: 5,)
-                        :PopupMenuItem(child: Row(children: <Widget>[
-                      Text('favorite')
-                    ]),
-                      value: 5,)
-                  ];
-                },
-              ) ,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: (deleteon == false)?IconButton(
-                icon: Icon(Icons.delete),
-                onPressed: () => {
-                  deleteflg()
-                },
-              )
-                  :IconButton(
-                icon: Icon(Icons.close),
-                onPressed: (){
-                  setState(() {
-                    deleteflg();
-                  });
-                },
-              ),
-            ),
-          ],
-        ),
-        floatingActionButton: (deleteon == false)?FloatingActionButton(
-            child:Icon(Icons.add,color: Colors.amber[200],),backgroundColor: Colors.brown[700] ,
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) =>Detail(
-                    0,
-                    null
-                )),
-              ).then((value) => setState(() {
+    Widget leftIcon(){
+      return Padding(
+          padding:EdgeInsets.all(4.0),
+          child:PopupMenuButton(
+            color: Colors.amber[100],
+            icon: Icon(Icons.settings),
+            initialValue: setting,
+            onSelected: (value){
+              setState(() {
+                if(value == 1){
+                  if(display2==false&&display3==false&&display4==false&&display5==false){}else{
+                    if(display1==true){
+                      displayOn1(false);display1=false;}
+                    else{displayOn1(true);display1=true;}}
+                }else  if(value == 2){
+                  if(display1==false&&display3==false&&display4==false&&display5==false){}else{
+                    if(display2==true){
+                      displayOn2(false);display2=false;
+                    }else{displayOn2(true);display2=true;}}
+                }else if(value == 3){
+                  if(display1==false&&display2==false&&display4==false&&display5==false){}else{
+                    if(display3==true){
+                      displayOn3(false);display3=false;}
+                    else{displayOn3(true);display3=true;}}
+                }else if(value == 4){
+                  if(display1==false&&display2==false&&display3==false&&display5==false){}else{
+                    if(display4==true){
+                      displayOn4(false);display4=false;}
+                    else{displayOn4(true);display4=true;}}
+                }else if(value == 5){
+                  if(display1==false&&display2==false&&display3==false&&display4==false){}else{
+                    if(display5==true){
+                      displayOn5(false);display5=false;}
+                    else{displayOn5(true);display5=true;}}
+                }
+                displayCount();
                 streamIn();
-              }));
-            })
-            :Container(),
-        body: (deleteon == false) ?Center(
-            child:Container(
-                decoration: BoxDecoration(
-                    color: Colors.amber[200]
+              });
+            },
+            itemBuilder: (BuildContext context) {
+              return[
+                PopupMenuItem(
+                    child:  Row(children: <Widget>[
+                      Text('Title'),
+                      SizedBox(width: width*0.05),
+                      (display1)?Icon(Icons.check,color: Colors.brown[700])
+                          :Container()
+                    ]),
+                    value: 1
                 ),
-                child:Column(children:<Widget>[
-                  Container(
-                      padding: EdgeInsets.fromLTRB(0, 8, 0, 0),
-                      height: height*0.07,
-                      child:TextField(
-                        controller: searchtext,
-                        style: TextStyle(color: Colors.brown[700]),
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.search, color: Colors.brown[700]),
-                          hintText: 'search',
-                          hintStyle: TextStyle(color: Colors.brown[700], fontSize: 20*adjustsizeh),
-                        ),
-                        onChanged:
-                            (value){
-                          onchanging(value);
-                        },
-                      )),
-                  Expanded(
-                      child:
-                      StreamBuilder(
-                          stream: _streamController.stream,
-                          // ignore: missing_return
-                          builder: (context, snapshot){
-                            if(snapshot.connectionState == ConnectionState.waiting){
-                              return Center(child:Container(height:height*0.01,width: width*0.02,
-                                  child:CircularProgressIndicator()));
-                            }
-                            if(!snapshot.hasData){
-                              return Container();
-                            }
-                            if(snapshot.hasData){
-                              return ListView.builder(
-                                itemCount: snapshot.data.length,
-                                itemBuilder: (BuildContext context, int index){
-                                  final itemlist00 = snapshot.data;
-                                  final item = itemlist00[index];
-                                  final favoriteCheck = favorite.contains(item.id);
-                                  return (item.memostyle==0)?InkWell(
-                                    borderRadius: BorderRadius.circular(20),
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(builder: (context) =>Detail(
-                                            1,
-                                            item.id
-                                        )),
-                                      ).then((value) => setState(() {
-                                        streamIn();
-                                      }));
-                                    },
-                                    onLongPress: () async {
-                                      var dialog = await showDialog(context: context, builder: (BuildContext context){
-                                        return SimpleDialog(
-                                            backgroundColor: Colors.amber[200],
-                                            children: <Widget>[
-                                              SimpleDialogOption(onPressed: (){
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(builder: (context) =>Detail(
-                                                      1,
-                                                      item.id
-                                                  )),
-                                                ).then((value) => setState(() {
-                                                  Navigator.pop(context);
-                                                  streamIn();
-                                                }));
-                                              },child: Container(
-                                                  height:height*0.05,
-                                                  width:width*0.4,
-                                                  alignment:Alignment.center,
-                                                  decoration: BoxDecoration(
-                                                      color: Colors.brown[700],
-                                                      border: Border.all(
-                                                        color: Colors.brown[800],
-                                                        width:1,
-                                                      )),
-                                                  child:Text('edit',style: TextStyle(fontSize: 22*adjustsizeh, color: Colors.yellow[200])))),
-                                              SimpleDialogOption(onPressed: (){
-                                                DB().insert(
-                                                    Item(
-                                                        title: item.title,
-                                                        email: item.email,
-                                                        pass: item.pass,
-                                                        url: item.url,
-                                                        memo: item.memo,
-                                                        favorite: item.favorite,
-                                                        memostyle: item.memostyle,
-                                                        date: DateTime.now().toString()));
-                                                setState(() {
-                                                  streamIn();
-                                                });
+                PopupMenuItem(
+                    child: Row(children: <Widget>[
+                      Text('ID'),
+                      SizedBox(width: width*0.05,),
+                      (display2)?Icon(Icons.check,color: Colors.brown[700])
+                          :Container()
+                    ]),
+                    value: 2
+                ),
+                PopupMenuItem(
+                    child:  Row(children: <Widget>[
+                      Text('Password'),
+                      SizedBox(width: width*0.05),
+                      (display3)?Icon(Icons.check,color: Colors.brown[700])
+                          :Container()
+                    ]),
+                    value: 3
+                ),
+                PopupMenuItem(
+                    child:  Row(children: <Widget>[
+                      Text('URL'),
+                      SizedBox(width: width*0.05,),
+                      (display4)?Icon(Icons.check,color: Colors.brown[700])
+                          :Container()
+                    ]),
+                    value: 4
+                ),
+                PopupMenuItem(
+                  child: Row(children: <Widget>[
+                    Text('Memo'),
+                    SizedBox(width: width*0.05),
+                    (display5)?Icon(Icons.check,color: Colors.brown[700])
+                        :Container()
+                  ]),
+                  value: 5,)
+              ];
+            },
+          )
+      );
+    }
+
+    Widget rightIcon1(){
+      return Padding(
+        padding: const EdgeInsets.all(4.0),
+        child:PopupMenuButton(
+          color: Colors.amber[100],
+          icon: Icon(Icons.shuffle),
+          initialValue: choice,
+          onSelected: (value){
+            setState(() {
+              if(choice==null){choice=1;}
+              var karioki=choice;
+              if(value!=5){
+                choice = value;}
+              if(value==5){choice=karioki;
+              if(favoriteOnly==false){favoriteOnly=true;}else{favoriteOnly=false;}
+              }
+              if(value!=5){
+                chosen(value);}
+              streamIn();
+            });
+          },
+          itemBuilder: (BuildContext context) {
+            return[
+              PopupMenuItem(
+                  child: Text('Date'),
+                  value: 1,
+                  enabled: (choice==1)?false:true),
+              PopupMenuItem(
+                child: Text('Name(title)'),
+                value: 2,
+                enabled: (choice==2)?false:true,
+              ),
+              PopupMenuItem(
+                child: Text('Name(ID)'),
+                value: 3,
+                enabled: (choice==3)?false:true,
+              ),
+              PopupMenuItem(
+                child: Text('Name(pass)'),
+                value: 4,
+                enabled: (choice==4)?false:true,
+              ),
+              (favoriteOnly==true) ?PopupMenuItem(
+                child: Row(children: <Widget>[
+                  Text('favorite'),
+                  SizedBox(width: width*0.05,),
+                  Icon(Icons.check,color: Colors.brown[800],)
+                ]),
+                value: 5,)
+                  :PopupMenuItem(child: Row(children: <Widget>[
+                Text('favorite')
+              ]),
+                value: 5,)
+            ];
+          },
+        ) ,
+      );
+    }
+
+    Widget rightIcon2(){
+      return Padding(
+        padding: const EdgeInsets.all(4.0),
+        child: (deleteon == false)?IconButton(
+          icon: Icon(Icons.delete),
+          onPressed: () => {
+            deleteflg()
+          },
+        )
+            :IconButton(
+          icon: Icon(Icons.close),
+          onPressed: (){
+            setState(() {
+              deleteflg();
+            });
+          },
+        ),
+      );
+    }
+
+    Widget floating(){
+      return FloatingActionButton(
+          child:Icon(Icons.add,color: Colors.amber[200],),backgroundColor: Colors.brown[700] ,
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) =>Detail(
+                  0,
+                  null
+              )),
+            ).then((value) => setState(() {
+              streamIn();
+            }));
+          });
+    }
+
+    Widget centerWidget(){
+      return Center(
+          child:Container(
+              decoration: BoxDecoration(
+                  color: Colors.amber[200]
+              ),
+              child:Column(children:<Widget>[
+                Container(
+                    padding: EdgeInsets.fromLTRB(0, 8, 0, 0),
+                    height: height*0.07,
+                    child:TextField(
+                      controller: searchtext,
+                      style: TextStyle(color: Colors.brown[700]),
+                      decoration: InputDecoration(
+                        prefixIcon: Icon(Icons.search, color: Colors.brown[700]),
+                        hintText: 'search',
+                        hintStyle: TextStyle(color: Colors.brown[700], fontSize: 20*adjustsizeh),
+                      ),
+                      onChanged:
+                          (value){
+                        onchanging(value);
+                      },
+                    )),
+                Expanded(
+                    child:
+                    StreamBuilder(
+                        stream: _streamController.stream,
+                        // ignore: missing_return
+                        builder: (context, snapshot){
+                          if(snapshot.connectionState == ConnectionState.waiting){
+                            return Center(child:Container(height:height*0.01,width: width*0.02,
+                                child:CircularProgressIndicator()));
+                          }
+                          if(!snapshot.hasData){
+                            return Container();
+                          }
+                          if(snapshot.hasData){
+                            return ListView.builder(
+                              itemCount: snapshot.data.length,
+                              itemBuilder: (BuildContext context, int index){
+                                final itemlist00 = snapshot.data;
+                                final item = itemlist00[index];
+                                final favoriteCheck = favorite.contains(item.id);
+                                return (item.memostyle==0)?InkWell(
+                                  borderRadius: BorderRadius.circular(20),
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) =>Detail(
+                                          1,
+                                          item.id
+                                      )),
+                                    ).then((value) => setState(() {
+                                      streamIn();
+                                    }));
+                                  },
+                                  onLongPress: () async {
+                                    var dialog = await showDialog(context: context, builder: (BuildContext context){
+                                      return SimpleDialog(
+                                          backgroundColor: Colors.amber[200],
+                                          children: <Widget>[
+                                            SimpleDialogOption(onPressed: (){
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(builder: (context) =>Detail(
+                                                    1,
+                                                    item.id
+                                                )),
+                                              ).then((value) => setState(() {
                                                 Navigator.pop(context);
-                                              },child: Container(
+                                                streamIn();
+                                              }));
+                                            },child: Container(
                                                 height:height*0.05,
                                                 width:width*0.4,
                                                 alignment:Alignment.center,
@@ -551,31 +524,516 @@ class _RootState extends State<Root>  with WidgetsBindingObserver  {
                                                       color: Colors.brown[800],
                                                       width:1,
                                                     )),
-                                                child:Text('copy', style: TextStyle(fontSize: 22*adjustsizeh, color: Colors.yellow[200]),),)),
-                                              SimpleDialogOption(onPressed: (){
-                                                DB().delete(item.id);
-                                                Navigator.pop(context);
-                                                setState(() {
-                                                  streamIn();
-                                                });
-                                              },child: Container(
-                                                  height:height*0.05,
-                                                  width:width*0.4,
-                                                  alignment:Alignment.center,
-                                                  decoration: BoxDecoration(
-                                                      color: Colors.brown[700],
-                                                      border: Border.all(
-                                                        color: Colors.brown[800],
-                                                        width:1,
-                                                      )),
-                                                  child:Text('delete', style: TextStyle(fontSize: 22*adjustsizeh, color: Colors.yellow[200]))))
-                                            ]);
-                                      });
+                                                child:Text('edit',style: TextStyle(fontSize: 22*adjustsizeh, color: Colors.yellow[200])))),
+                                            SimpleDialogOption(onPressed: (){
+                                              DB().insert(
+                                                  Item(
+                                                      title: item.title,
+                                                      email: item.email,
+                                                      pass: item.pass,
+                                                      url: item.url,
+                                                      memo: item.memo,
+                                                      favorite: item.favorite,
+                                                      memostyle: item.memostyle,
+                                                      date: DateTime.now().toString()));
+                                              setState(() {
+                                                streamIn();
+                                              });
+                                              Navigator.pop(context);
+                                            },child: Container(
+                                              height:height*0.05,
+                                              width:width*0.4,
+                                              alignment:Alignment.center,
+                                              decoration: BoxDecoration(
+                                                  color: Colors.brown[700],
+                                                  border: Border.all(
+                                                    color: Colors.brown[800],
+                                                    width:1,
+                                                  )),
+                                              child:Text('copy', style: TextStyle(fontSize: 22*adjustsizeh, color: Colors.yellow[200]),),)),
+                                            SimpleDialogOption(onPressed: (){
+                                              DB().delete(item.id);
+                                              Navigator.pop(context);
+                                              setState(() {
+                                                streamIn();
+                                              });
+                                            },child: Container(
+                                                height:height*0.05,
+                                                width:width*0.4,
+                                                alignment:Alignment.center,
+                                                decoration: BoxDecoration(
+                                                    color: Colors.brown[700],
+                                                    border: Border.all(
+                                                      color: Colors.brown[800],
+                                                      width:1,
+                                                    )),
+                                                child:Text('delete', style: TextStyle(fontSize: 22*adjustsizeh, color: Colors.yellow[200]))))
+                                          ]);
+                                    });
+                                  },
+                                  child: Card(
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                                    child: Container(
+                                      height: height*0.02+height*0.03*displayHeight,
+                                      child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: <Widget>[
+                                            Container(
+                                                child: Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    mainAxisAlignment:
+                                                    MainAxisAlignment.spaceAround,
+                                                    children: <Widget>[
+                                                      (display1 == true)?Container(
+                                                          height: height*0.029,
+                                                          width:width*0.85,
+                                                          decoration: BoxDecoration(
+                                                              border: Border(
+                                                                  bottom: BorderSide(
+                                                                    color: Colors.white,
+                                                                    width:1,
+                                                                  )
+                                                              )),
+                                                          child:Row(children:<Widget>[
+                                                            SizedBox(width: width*0.05),Flexible(
+                                                              child:Text(item.title,
+                                                            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black54, fontSize: fontsize*adjustsizeh*1.06,
+                                                              ),
+                                                                overflow: TextOverflow.ellipsis,
+                                                                maxLines: 1
+                                                          ),
+                                                             ),
+                                                          Container()
+                                                          ])):Container(),
+                                                      (display2 == true)?Container(
+                                                          height: height*0.024,
+                                                          width: width*0.85,
+                                                          child: Row(children:<Widget>[
+                                                            Container(
+                                                              child: Text("ID/Email: ",
+                                                                  textAlign: TextAlign.center,
+                                                                  style: TextStyle(
+                                                                      fontSize: fontsize*adjustsizeh*0.9,
+                                                                      fontWeight: FontWeight.w400,
+                                                                      color: Colors.black54)),
+                                                            ),
+                                                            Flexible(child:Text(
+                                                                  item.email,
+                                                              style: TextStyle(fontSize:fontsize*adjustsizeh, color: Colors.black54, fontWeight: FontWeight.w500),
+                                                            overflow: TextOverflow.ellipsis,
+                                                            maxLines: 1)),
+                                                            (item.email.length != 0) ?IconButton(icon: Icon(Icons.copy,size: iconsize*adjustsizeh),
+                                                                onPressed:(){
+                                                                if(item.email.length != 0){
+                                                                  ClipboardManager.copyToClipBoard(
+                                                                      item.email);}
+                                                                })
+                                                                :Container(),
+                                                          ])):Container(),
+                                                      (display3 == true)?Container(
+                                                        height: height*0.025,
+                                                        width: width*0.85,
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                          MainAxisAlignment.start,
+                                                          children: <Widget>[
+                                                            Container(
+                                                              child: Text("PASSWORD: ",
+                                                                  textAlign: TextAlign.center,
+                                                                  style: TextStyle(
+                                                                      fontSize: fontsize*adjustsizeh*0.9,
+                                                                      fontWeight: FontWeight.w400,
+                                                                      color: Colors.black54)),
+                                                            ),
+                                                            Flexible(
+                                                                child:Text(item.pass,
+                                                                  style: TextStyle(
+                                                                      fontSize: fontsize*adjustsizeh,
+                                                                      fontWeight: FontWeight.bold,
+                                                                      color:Colors.black54),
+                                                                  overflow: TextOverflow.ellipsis,
+                                                                  maxLines: 1
+                                                                )
+                                                            ),
+                                                            (item.pass.length != 0) ?IconButton(icon: Icon(Icons.copy,size: iconsize*adjustsizeh),
+                                                              onPressed: (){
+                                                              if(item.pass.length != 0){
+                                                                ClipboardManager.copyToClipBoard(
+                                                                    item.pass);}
+                                                              })
+                                                                :Container(),
+                                                          ]
+                                                        )
+                                                      ):Container(),
+                                                      (display4 == true)?Container(
+                                                          height: height*0.024,
+                                                          width: width*0.85,
+                                                          child:
+                                                          Row(children: <Widget>[
+                                                            SizedBox(width: width*0.01),
+                                                            Flexible(
+                                                              child:Text(item.url,
+                                                                style: TextStyle(
+                                                                  fontSize: fontsize*adjustsizeh,
+                                                                  color: Colors.brown[800],
+                                                                ),
+                                                                overflow: TextOverflow.ellipsis,
+                                                                maxLines: 1,
+                                                              ),
+                                                            ),
+                                                            (item.url.length != 0)?IconButton(icon: Icon(Icons.copy, size: iconsize*adjustsizeh),
+                                                              onPressed: (){
+                                                                if(item.pass.length != 0){
+                                                                  ClipboardManager.copyToClipBoard(
+                                                                      item.url);}
+                                                              },)
+                                                                :Container()
+                                                          ])):Container(),
+                                                      (display5 == true)?Container(
+                                                          height: height*0.024,
+                                                          width: width*0.75,
+                                                          child:Row(children:<Widget>[
+                                                            SizedBox(width: width*0.03,),
+                                                            Flexible(
+                                                              child:Text(item.memo,
+                                                                style: TextStyle(
+                                                                  fontSize: 16*adjustsizeh,
+                                                                  color: Colors.brown[800],
+                                                                ),
+                                                                overflow: TextOverflow.ellipsis,
+                                                                maxLines: 1,
+                                                              ),
+                                                            ),
+                                                            Container(),
+                                                          ])
+                                                      ):Container(),
+                                                    ])
+                                            ),
+                                            Container(
+                                              height: height*0.15,
+                                              decoration: BoxDecoration(
+                                              ),
+                                              child: Row(children: <Widget>[
+                                                SizedBox(width: width*0.02),
+                                                GestureDetector(
+                                                    onTap: () {
+                                                      if(favoriteCheck){
+                                                        DB().update(
+                                                            Item(
+                                                                id: item.id,
+                                                                title:item.title,
+                                                                email:item.email,
+                                                                pass: item.pass,
+                                                                url: item.url,
+                                                                memo: item.memo,
+                                                                favorite: 0,
+                                                                memostyle:item.memostyle,
+                                                                date: DateTime.now().toString()) ,
+                                                            item.id);
+                                                        setState(() {
+                                                          favorite.remove(item.id);
+                                                        });
+                                                      }else{
+                                                        DB().update(
+                                                            Item(
+                                                                id: item.id,
+                                                                title:item.title,
+                                                                email:item.email,
+                                                                pass: item.pass,
+                                                                url: item.url,
+                                                                memo: item.memo,
+                                                                favorite: 1,
+                                                                memostyle: item.memostyle,
+                                                                date: DateTime.now().toString()),
+                                                            item.id);
+                                                        setState(() {
+                                                          favorite.add(item.id);
+                                                        });
+                                                      }
+                                                    },
+                                                    child:(favoriteCheck)?Icon(Icons.favorite,color: Colors.yellow, size: 30*adjustsizeh,)
+                                                        :Icon(Icons.favorite_border, color: Colors.brown[700], size: 30*adjustsizeh,)
+                                                ),
+                                                SizedBox(width: width*0.025),
+                                              ]),
+                                            ),
+                                          ]),
+                                    ),
+                                  ),
+                                ):InkWell(
+                                  borderRadius: BorderRadius.circular(20),
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) =>Detail(
+                                          2,
+                                          item.id
+                                      )),
+                                    ).then((value) => setState(() {
+                                      streamIn();
+                                    }));
+                                  },
+                                  onLongPress: () async {
+                                    var dialog = await showDialog(context: context, builder: (BuildContext context){
+                                      return SimpleDialog(
+                                        backgroundColor: Colors.amber[200],
+                                        children: <Widget>[
+                                        SimpleDialogOption(onPressed: (){
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(builder: (context) =>Detail(
+                                                2,
+                                                item.id
+                                            )),
+                                          ).then((value) => setState(() {
+                                            Navigator.pop(context);
+                                            streamIn();
+                                          }));
+                                        },child: Container(
+                                            height:height*0.05,
+                                            width:width*0.4,
+                                            alignment:Alignment.center,
+                                            decoration: BoxDecoration(
+                                                color: Colors.brown[700],
+                                                border: Border.all(
+                                                  color: Colors.brown[800],
+                                                  width:1,
+                                                )),
+                                            child:Text('edit',style: TextStyle(fontSize: 22*adjustsizeh, color: Colors.yellow[200])))),
+                                        SimpleDialogOption(onPressed: (){
+                                          DB().insert(
+                                              Item(
+                                                  title: item.title,
+                                                  email: item.email,
+                                                  pass: item.pass,
+                                                  url: item.url,
+                                                  memo: item.memo,
+                                                  memostyle: item.memostyle,
+                                                  favorite: item.favorite,
+                                                  date: DateTime.now().toString()));
+                                          Navigator.pop(context);
+                                        },child: Container(
+                                            height:height*0.05,
+                                            width:width*0.4,
+                                            alignment:Alignment.center,
+                                            decoration: BoxDecoration(
+                                                color: Colors.brown[700],
+                                                border: Border.all(
+                                                  color: Colors.brown[800],
+                                                  width:1,
+                                                )),
+                                            child:Text('copy', style: TextStyle(fontSize: 22*adjustsizeh, color: Colors.yellow[200])))),
+                                        SimpleDialogOption(onPressed: (){
+                                          DB().delete(item.id);
+                                          Navigator.pop(context);
+                                          setState(() {
+                                            streamIn();
+                                          });
+                                        },child: Container(
+                                            height:height*0.05,
+                                            width:width*0.4,
+                                            alignment:Alignment.center,
+                                            decoration: BoxDecoration(
+                                                color: Colors.brown[700],
+                                                border: Border.all(
+                                                  color: Colors.brown[800],
+                                                  width:1,
+                                                )),
+                                            child:Text('delete', style: TextStyle(fontSize: 22*adjustsizeh, color: Colors.yellow[200]))))
+                                      ],);
+                                    });
+                                  },
+                                  child: Card(
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                                    child: Container(
+                                      height: height*0.02+height*0.03*displayHeight,
+                                      child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: <Widget>[
+                                            Container(
+                                                child:Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    children: <Widget>[
+                                                      //SizedBox(height:height*0.016),
+                                                      Container(
+                                                          height: height*0.013+height*0.020*displayHeight*1.1,
+                                                          width: width*0.8,
+                                                          alignment: Alignment.topLeft,
+                                                          child:Row(
+                                                              mainAxisAlignment: MainAxisAlignment.start,
+                                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                                              children:<Widget>[
+                                                                SizedBox(width: width*0.03),
+                                                                Flexible(
+                                                                  child:Text(item.memo,
+                                                                    style: TextStyle(
+                                                                      fontSize: fontsize*adjustsizeh*1.1,
+                                                                      color: Colors.brown[800],
+                                                                    ),
+                                                                    overflow: TextOverflow.ellipsis,
+                                                                    maxLines:(displayHeight==1)?1
+                                                                        :(displayHeight==2)?2
+                                                                        :(displayHeight==3)?3
+                                                                        :(displayHeight==4)?4
+                                                                        :(displayHeight==5)?5
+                                                                        :6
+                                                                  ),
+                                                                ),
+                                                              ])
+                                                      )
+                                                    ])
+                                            ),
+                                            Container(
+                                              height: height*0.15,
+                                              decoration: BoxDecoration(
+                                              ),
+                                              child: Row(children: <Widget>[
+                                                SizedBox(width: width*0.02),
+                                                GestureDetector(
+                                                    onTap: () {
+                                                      if(favoriteCheck){
+                                                        DB().update(
+                                                            Item(
+                                                                id: item.id,
+                                                                title:item.title,
+                                                                email:item.email,
+                                                                pass: item.pass,
+                                                                url: item.url,
+                                                                memo: item.memo,
+                                                                favorite: 0,
+                                                                memostyle:item.memostyle,
+                                                                date: DateTime.now().toString()),
+                                                            item.id);
+                                                        setState(() {
+                                                          favorite.remove(item.id);
+                                                        });
+                                                      }else{
+                                                        DB().update(
+                                                            Item(
+                                                                id: item.id,
+                                                                title:item.title,
+                                                                email:item.email,
+                                                                pass: item.pass,
+                                                                url: item.url,
+                                                                memo: item.memo,
+                                                                favorite: 1,
+                                                                memostyle: item.memostyle,
+                                                                date: DateTime.now().toString()),
+                                                            item.id);
+                                                        setState(() {
+                                                          favorite.add(item.id);
+                                                        });
+                                                      }
+                                                    },
+                                                    child:(favoriteCheck)?Icon(Icons.favorite,color: Colors.yellow, size: 30*adjustsizeh)
+                                                        :Icon(Icons.favorite_border, color: Colors.brown[700], size: 30*adjustsizeh)
+                                                ),
+                                                SizedBox(width: width*0.025),
+                                              ]),
+                                            ),
+                                          ]),
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+                          }
+                        }
+                    )
+                ),
+              ]))
+      );
+    }
+
+    Widget centerWidgetD(){
+      return Center(
+          child:Container(
+              decoration: BoxDecoration(
+                  color: Colors.amber[200]
+              ),
+              child:Column(children:<Widget>[
+                Container(
+                    height: height*0.07,
+                    width: width,
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children:<Widget> [
+                          ElevatedButton(onPressed: (){
+                            setState(() {
+                              for(var i=0;i<deleteCheckList.length;i++){
+                                deleteCheckList[i]=true;
+                              }
+                              if(deleteValueStorage.isNotEmpty){
+                                for(var i=0;i<deleteValueStorage.length;i++){
+                                  deleteValueList.add(deleteValueStorage[i]);
+                                }
+                              }
+                            });
+                          }, child: Text('all check', style: TextStyle(color: Colors.yellow[200])),
+                              style: ElevatedButton.styleFrom(
+                                primary: Colors.brown,
+                              )),
+                          SizedBox(width: width*0.2),
+                          ElevatedButton(onPressed: (){
+                            setState(() {
+                              for(var i=0;i<deleteCheckList.length;i++){
+                                deleteCheckList[i]=false;
+                              }
+                              deleteValueList.clear();
+                            });
+                          }, child: Text('all clear',style: TextStyle(color: Colors.yellow[200])),
+                              style: ElevatedButton.styleFrom(
+                                primary: Colors.brown,
+                              ))
+                        ])),
+                Expanded(
+                    child: StreamBuilder(
+                        stream: _streamController.stream,
+                        // ignore: missing_return
+                        builder: (context, snapshot){
+                          if(!snapshot.hasData){
+                            return Container();
+                          }
+                          if(snapshot.hasData){
+                            return ListView.builder(
+                              itemCount: snapshot.data.length,
+                              itemBuilder: (BuildContext context, int index){
+                                final itemlist00 = snapshot.data;
+                                final item = itemlist00[index];
+                                return Container(child:Row(children:<Widget>[
+                                  Container(
+                                      height:height*0.15*0.7,
+                                      width:width*0.1,
+                                      child: Checkbox(
+                                        activeColor: Colors.brown,
+                                        value: deleteCheckList[index],
+                                        onChanged: (value){
+                                          setState(() {
+                                            if(value) {
+                                              deleteCheckList[index] = value;
+                                              if(deleteValueList.contains(item.id.toString())==false){
+                                                deleteValueList.add(item.id.toString());
+                                              }
+                                            }
+                                            else{
+                                              deleteCheckList[index] = value;
+                                              if(deleteValueList.contains(item.id.toString())){
+                                                deleteValueList.remove(item.id.toString());
+                                              }
+                                            }
+                                          });
+                                        },
+                                      )),
+                                  (item.memostyle==0)?InkWell(
+                                    borderRadius: BorderRadius.circular(20),
+                                    onTap: () {
                                     },
                                     child: Card(
                                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                                       child: Container(
-                                        height: height*0.02+height*0.03*displayHeight,
+                                        height: height*0.7*0.02+height*0.7*0.03*displayHeight,
+                                        width: width*0.8,
                                         child: Row(
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: <Widget>[
@@ -585,8 +1043,8 @@ class _RootState extends State<Root>  with WidgetsBindingObserver  {
                                                       mainAxisAlignment:
                                                       MainAxisAlignment.spaceAround,
                                                       children: <Widget>[
-                                                        (display1 == true)?Container(
-                                                            width:width*0.85,
+                                                        (display1 ==true)?Container(
+                                                            width:width*0.85*0.7,
                                                             decoration: BoxDecoration(
                                                                 border: Border(
                                                                     bottom: BorderSide(
@@ -594,623 +1052,243 @@ class _RootState extends State<Root>  with WidgetsBindingObserver  {
                                                                       width:1,
                                                                     )
                                                                 )),
-                                                            height: height*0.03,
-                                                            child:Row(children:<Widget>[SizedBox(width: width*0.05,),Text(item.title,
-                                                              style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black54, fontSize: fontsize*adjustsizeh),
-                                                            )])):Container(),
+                                                            height: height*0.03*0.7,
+                                                            child:Row(children:<Widget>[SizedBox(width: width*0.05*0.7,),
+                                                              Flexible(child:Text(item.title,
+                                                                style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black54, fontSize: fontsize*adjustsizeh*0.7),
+                                                                overflow: TextOverflow.ellipsis,
+                                                                maxLines: 1,
+                                                              ))])):Container(),
                                                         (display2 == true)?Container(
-                                                            height: height*0.025,
-                                                            child: Row(children:<Widget>[Text(
-                                                                'ID/Email: '
-                                                                    +item.email,
-                                                                style: TextStyle(fontSize:fontsize*adjustsizeh, color: Colors.black54, fontWeight: FontWeight.w600)),
-                                                              (item.email.length != 0) ?IconButton(icon: Icon(Icons.copy,size: iconsize*adjustsizeh,),
-                                                                  onPressed:(){print(item.email);
-                                                                    if(item.email.length != 0){
-                                                                      ClipboardManager.copyToClipBoard(
-                                                                          item.email);}
-                                                                  })
+                                                            height: height*0.025*0.8,
+                                                            width: width*0.65*0.8,
+                                                            child: Row(children:<Widget>[
+                                                              Container(
+                                                                child: Text(" ID/Email:",
+                                                                    textAlign: TextAlign.center,
+                                                                    style: TextStyle(
+                                                                        fontSize: fontsize*adjustsizeh*0.7,
+                                                                        fontWeight: FontWeight.w400,
+                                                                        color: Colors.black54)),
+                                                              ),
+                                                              Flexible(child:Text(
+                                                                item.email,
+                                                                style: TextStyle(fontSize:fontsize*adjustsizeh*0.7, color: Colors.black54),
+                                                                overflow: TextOverflow.ellipsis,
+                                                                maxLines: 1)),
+                                                              (item.email.length != 0) ?IconButton(icon: Icon(Icons.copy,size: iconsize*adjustsizeh*0.7),
+                                                                  onPressed:(){
+                                                                if(item.email.length != 0){
+                                                                  ClipboardManager.copyToClipBoard(
+                                                                      item.email);}
+                                                              })
                                                                   :Container(),
                                                             ])):Container(),
                                                         (display3 == true)?Container(
-                                                          height: height*0.025,
-                                                          width: width*0.6,
+                                                          height: height*0.025*0.7,
+                                                          width: width*0.6*0.8,
                                                           child: Row(
                                                             mainAxisAlignment:
                                                             MainAxisAlignment.start,
                                                             children: <Widget>[
                                                               Container(
-                                                                child: Text("PASSWORD: ",
+                                                                child: Text(" PASSWORD:",
                                                                     textAlign: TextAlign.center,
                                                                     style: TextStyle(
-                                                                        fontSize: fontsize*adjustsizeh,
-                                                                        fontWeight: FontWeight.w600,
+                                                                        fontSize: fontsize*adjustsizeh*0.7,
+                                                                        fontWeight: FontWeight.w400,
                                                                         color: Colors.black54)),
                                                               ),
-                                                              Container(
-                                                                  child:Text(item.pass,
-                                                                    style: TextStyle(
-                                                                        fontSize: fontsize*adjustsizeh,
-                                                                        fontWeight: FontWeight.bold,
-                                                                        color:Colors.black54),
-                                                                  )
+                                                              Flexible(
+                                                                child:Text(item.pass,
+                                                                  style: TextStyle(
+                                                                      fontSize: fontsize*adjustsizeh*0.7,
+                                                                      fontWeight: FontWeight.bold,
+                                                                      color: Colors.black54),
+                                                                  overflow: TextOverflow.ellipsis,
+                                                                  maxLines: 1
+                                                                ),
                                                               ),
-                                                              (item.pass.length != 0) ?IconButton(icon: Icon(Icons.copy,size: iconsize*adjustsizeh),
-                                                                onPressed: (){print(item.pass);
-                                                                  if(item.pass.length != 0){
+                                                              (item.pass.length != 0) ?IconButton(
+                                                                icon: Icon(Icons.copy,size: iconsize*adjustsizeh*0.7),
+                                                                onPressed: (){
+                                                                  if(item.pass.legth != 0){
                                                                     ClipboardManager.copyToClipBoard(
                                                                         item.pass);}
-                                                                },)
+                                                                })
                                                                   :Container(),
-                                                            ],
-                                                          ),
+                                                            ]
+                                                          )
                                                         ):Container(),
                                                         (display4 == true)?Container(
-                                                            height: height*0.02,
-                                                            width: width*0.65,
-                                                            child:
-                                                            Row(children: <Widget>[
+                                                            height: height*0.02*0.7,
+                                                            width: width*0.65*0.7,
+                                                            child:Row(children: <Widget>[
+                                                              SizedBox(width: width*0.01*0.7),
                                                               Flexible(
                                                                 child:Text(item.url,
                                                                   style: TextStyle(
-                                                                    fontSize: fontsize*adjustsizeh,
+                                                                    fontSize: fontsize*adjustsizeh*0.7,
                                                                     color: Colors.brown[800],
                                                                   ),
                                                                   overflow: TextOverflow.ellipsis,
                                                                   maxLines: 1,
                                                                 ),
                                                               ),
-                                                              (item.url.length != 0)?IconButton(icon: Icon(Icons.copy, size: iconsize*adjustsizeh),
+                                                              (item.url.length != 0)?IconButton(icon: Icon(Icons.copy, size: iconsize*adjustsizeh*0.7),
                                                                 onPressed: (){
-                                                                  if(item.pass.length != 0){
+                                                                  if(item.pass.legth != 0){
                                                                     ClipboardManager.copyToClipBoard(
                                                                         item.url);}
                                                                 },)
                                                                   :Container()
                                                             ])):Container(),
                                                         (display5 == true)?Container(
-                                                            height: height*0.025,
+                                                            height: height*0.02,
                                                             width: width*0.7,
-                                                            child:Row(children:<Widget>[
-                                                              SizedBox(width: width*0.03,),
-                                                              Flexible(
-                                                                child:Text(item.memo,
+                                                            alignment: Alignment.topLeft,
+                                                            child: Row(children: <Widget>
+                                                            [Flexible(
+                                                                child:Text(' '+item.memo,
                                                                   style: TextStyle(
-                                                                    fontSize: 14*adjustsizeh,
+                                                                    fontSize: fontsize*adjustsizeh*0.7,
                                                                     color: Colors.brown[800],
                                                                   ),
                                                                   overflow: TextOverflow.ellipsis,
-                                                                  maxLines: 2,
+                                                                  maxLines: 1,
                                                                 ),
-                                                              ),
-                                                              Container(),
-                                                            ])
+                                                              )])
                                                         ):Container(),
                                                       ])
                                               ),
                                               Container(
-                                                height: height*0.15,
+                                                height: height*0.15*0.7,
                                                 decoration: BoxDecoration(
                                                 ),
                                                 child: Row(children: <Widget>[
-                                                  SizedBox(width: width*0.02),
+                                                  SizedBox(width: width*0.02*0.7),
                                                   GestureDetector(
                                                       onTap: () {
-                                                        if(favoriteCheck){
-                                                          DB().update(
-                                                              Item(
-                                                                  id: item.id,
-                                                                  title:item.title,
-                                                                  email:item.email,
-                                                                  pass: item.pass,
-                                                                  url: item.url,
-                                                                  memo: item.memo,
-                                                                  favorite: 0,
-                                                                  memostyle:item.memostyle,
-                                                                  date: DateTime.now().toString()) ,
-                                                              item.id);
-                                                          setState(() {
-                                                            favorite.remove(item.id);
-                                                          });
-                                                        }else{
-                                                          DB().update(
-                                                              Item(
-                                                                  id: item.id,
-                                                                  title:item.title,
-                                                                  email:item.email,
-                                                                  pass: item.pass,
-                                                                  url: item.url,
-                                                                  memo: item.memo,
-                                                                  favorite: 1,
-                                                                  memostyle: item.memostyle,
-                                                                  date: DateTime.now().toString()),
-                                                              item.id);
-                                                          setState(() {
-                                                            favorite.add(item.id);
-                                                          });
-                                                        }
                                                       },
-                                                      child:(favoriteCheck)?Icon(Icons.favorite,color: Colors.brown[700], size: 30*adjustsizeh,)
-                                                          :Icon(Icons.favorite_border, color: Colors.brown[700], size: 30*adjustsizeh,)
+                                                      child:(item.favorite==true)?Icon(Icons.favorite,color: Colors.yellow, size: 30*0.7)
+                                                          :Icon(Icons.favorite_border,color: Colors.brown[700], size: 30*0.7,)
                                                   ),
-                                                  SizedBox(width: width*0.025),
+                                                  SizedBox(width: width*0.025*0.7),
                                                 ]),
                                               ),
                                             ]),
                                       ),
                                     ),
-                                  ):InkWell(
+                                  )
+                                      :InkWell(
                                     borderRadius: BorderRadius.circular(20),
                                     onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(builder: (context) =>Detail(
-                                            1,
-                                            item.id
-                                        )),
-                                      ).then((value) => setState(() {
-                                        streamIn();
-                                      }));
-                                    },
-                                    onLongPress: () async {
-                                      var dialog = await showDialog(context: context, builder: (BuildContext context){
-                                        return SimpleDialog(children: <Widget>[
-                                          SimpleDialogOption(onPressed: (){
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(builder: (context) =>Detail(
-                                                  1,
-                                                  item.id
-                                              )),
-                                            ).then((value) => setState(() {
-                                              streamIn();
-                                            }));
-                                          },child: Container(
-                                              height:height*0.05,
-                                              width:width*0.4,
-                                              alignment:Alignment.center,
-                                              decoration: BoxDecoration(
-                                                  color: Colors.brown[700],
-                                                  border: Border.all(
-                                                    color: Colors.brown[800],
-                                                    width:1,
-                                                  )),
-                                              child:Text('edit',style: TextStyle(fontSize: 22*adjustsizeh, color: Colors.yellow[200])))),
-                                          SimpleDialogOption(onPressed: (){
-                                            DB().insert(
-                                                Item(
-                                                    title: item.title,
-                                                    email: item.email,
-                                                    pass: item.pass,
-                                                    url: item.url,
-                                                    memo: item.memo,
-                                                    memostyle: item.memostyle,
-                                                    favorite: item.favorite,
-                                                    date: DateTime.now().toString()));
-                                            Navigator.pop(context);
-                                          },child: Container(
-                                              height:height*0.05,
-                                              width:width*0.4,
-                                              alignment:Alignment.center,
-                                              decoration: BoxDecoration(
-                                                  color: Colors.brown[700],
-                                                  border: Border.all(
-                                                    color: Colors.brown[800],
-                                                    width:1,
-                                                  )),
-                                              child:Text('copy', style: TextStyle(fontSize: 22*adjustsizeh, color: Colors.yellow[200])))),
-                                          SimpleDialogOption(onPressed: (){
-                                            DB().delete(item.id);
-                                            Navigator.pop(context);
-                                            setState(() {
-                                              streamIn();
-                                            });
-                                          },child: Container(
-                                              height:height*0.05,
-                                              width:width*0.4,
-                                              alignment:Alignment.center,
-                                              decoration: BoxDecoration(
-                                                  color: Colors.brown[700],
-                                                  border: Border.all(
-                                                    color: Colors.brown[800],
-                                                    width:1,
-                                                  )),
-                                              child:Text('delete', style: TextStyle(fontSize: 22*adjustsizeh, color: Colors.yellow[200]))))
-                                        ],);
-                                      });
                                     },
                                     child: Card(
                                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                                       child: Container(
-                                        height: height*0.02+height*0.03*displayHeight,
+                                        height: height*0.7*0.02+height*0.7*0.03*displayHeight,
+                                        width: width*0.8,
                                         child: Row(
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: <Widget>[
                                               Container(
-                                                  child:Column(
+                                                  child: Column(
                                                       crossAxisAlignment: CrossAxisAlignment.start,
-                                                      mainAxisAlignment: MainAxisAlignment.start,
+                                                      mainAxisAlignment:
+                                                      MainAxisAlignment.start,
                                                       children: <Widget>[
-                                                        SizedBox(height:height*0.016),
+                                                        SizedBox(height:height*0.02*0.7),
                                                         Container(
-                                                            height: height*0.013+height*0.02*displayHeight,
+                                                            height: (height*0.7*0.02+height*0.7*0.03*displayHeight)*0.8,
                                                             width: width*0.7,
                                                             alignment: Alignment.topLeft,
-                                                            child:Row(
+                                                            child: Row(
                                                                 mainAxisAlignment: MainAxisAlignment.start,
                                                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                                                children:<Widget>[
-                                                                  SizedBox(width: width*0.03,),
-                                                                  Flexible(
-                                                                    child:Text(item.memo,
-                                                                      style: TextStyle(
-                                                                        fontSize: fontsize*adjustsizeh,
-                                                                        color: Colors.brown[800],
-                                                                      ),
-                                                                      overflow: TextOverflow.ellipsis,
-                                                                      maxLines: 5,
-                                                                    ),
+                                                                children: <Widget>
+                                                             [SizedBox(width: width*0.03*0.7),
+                                                              Flexible(
+                                                                child:Text(item.memo,
+                                                                  style: TextStyle(
+                                                                    fontSize: fontsize*adjustsizeh*0.7*1.1,
+                                                                    color: Colors.brown[800],
                                                                   ),
-                                                                ])
+                                                                  overflow: TextOverflow.ellipsis,
+                                                                  maxLines: (displayHeight==1)?1
+                                                                      :(displayHeight==2)?2
+                                                                      :(displayHeight==3)?3
+                                                                      :(displayHeight==4)?4
+                                                                      :(displayHeight==5)?5
+                                                                      :6
+                                                                ),
+                                                              )])
                                                         )
                                                       ])
                                               ),
                                               Container(
-                                                height: height*0.15,
+                                                height: height*0.15*0.7,
                                                 decoration: BoxDecoration(
                                                 ),
                                                 child: Row(children: <Widget>[
-                                                  SizedBox(width: width*0.02),
+                                                  SizedBox(width: width*0.02*0.7),
                                                   GestureDetector(
                                                       onTap: () {
-                                                        if(favoriteCheck){
-                                                          DB().update(
-                                                              Item(
-                                                                  id: item.id,
-                                                                  title:item.title,
-                                                                  email:item.email,
-                                                                  pass: item.pass,
-                                                                  url: item.url,
-                                                                  memo: item.memo,
-                                                                  favorite: 0,
-                                                                  memostyle:item.memostyle,
-                                                                  date: DateTime.now().toString()),
-                                                              item.id);
-                                                          setState(() {
-                                                            favorite.remove(item.id);
-                                                          });
-                                                        }else{
-                                                          DB().update(
-                                                              Item(
-                                                                  id: item.id,
-                                                                  title:item.title,
-                                                                  email:item.email,
-                                                                  pass: item.pass,
-                                                                  url: item.url,
-                                                                  memo: item.memo,
-                                                                  favorite: 1,
-                                                                  memostyle: item.memostyle,
-                                                                  date: DateTime.now().toString()),
-                                                              item.id);
-                                                          setState(() {
-                                                            favorite.add(item.id);
-                                                          });
-                                                        }
                                                       },
-                                                      child:(favoriteCheck)?Icon(Icons.favorite,color: Colors.brown[700], size: 30*adjustsizeh)
-                                                          :Icon(Icons.favorite_border, color: Colors.brown[700], size: 30*adjustsizeh)
+                                                      child:(item.favorite==true)?Icon(Icons.favorite,color: Colors.yellow, size: 30*0.7)
+                                                          :Icon(Icons.favorite_border,color: Colors.brown[700], size: 30*0.7,)
                                                   ),
-                                                  SizedBox(width: width*0.025),
+                                                  SizedBox(width: width*0.025*0.7),
                                                 ]),
                                               ),
                                             ]),
                                       ),
                                     ),
-                                  );
-                                },
-                              );
-                            }
+                                  ),
+                                ]));
+                              },
+                            );
                           }
-                      )
-                  ),
-                ]))
-        )
-            :Center(
-            child:Container(
-                decoration: BoxDecoration(
-                    color: Colors.amber[200]
+                        }
+                    )
                 ),
-                child:Column(children:<Widget>[
-                  Container(
-                      height: height*0.07,
-                      width: width,
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children:<Widget> [
-                            ElevatedButton(onPressed: (){
-                              setState(() {
-                                for(var i=0;i<deleteCheckList.length;i++){
-                                  deleteCheckList[i]=true;
-                                }
-                                if(deleteValueStorage.isNotEmpty){
-                                  for(var i=0;i<deleteValueStorage.length;i++){
-                                    deleteValueList.add(deleteValueStorage[i]);
-                                  }
-                                }
-                              });
-                            }, child: Text('all check', style: TextStyle(color: Colors.yellow[200])),
-                                style: ElevatedButton.styleFrom(
-                                  primary: Colors.brown,
-                                )),
-                            SizedBox(width: width*0.2,),
-                            ElevatedButton(onPressed: (){
-                              setState(() {
-                                for(var i=0;i<deleteCheckList.length;i++){
-                                  deleteCheckList[i]=false;
-                                }
-                                deleteValueList.clear();
-                              });
-                            }, child: Text('all clear',style: TextStyle(color: Colors.yellow[200])),
-                                style: ElevatedButton.styleFrom(
-                                  primary: Colors.brown,
-                                ))
-                          ])),
-                  Expanded(
-                      child: StreamBuilder(
-                          stream: _streamController.stream,
-                          // ignore: missing_return
-                          builder: (context, snapshot){
-                            if(!snapshot.hasData){
-                              return Container();
-                            }
-                            if(snapshot.hasData){
-                              return ListView.builder(
-                                itemCount: snapshot.data.length,
-                                itemBuilder: (BuildContext context, int index){
-                                  final itemlist00 = snapshot.data;
-                                  final item = itemlist00[index];
-                                  return Container(child:Row(children:<Widget>[
-                                    Container(
-                                        height:height*0.15*0.7,
-                                        width:width*0.1,
-                                        child: Checkbox(
-                                          activeColor: Colors.brown,
-                                          value: deleteCheckList[index],
-                                          onChanged: (value){
-                                            setState(() {
-                                              if(value) {
-                                                deleteCheckList[index] = value;
-                                                if(deleteValueList.contains(item.id.toString())==false){
-                                                  deleteValueList.add(item.id.toString());
-                                                }
-                                              }
-                                              else{
-                                                deleteCheckList[index] = value;
-                                                if(deleteValueList.contains(item.id.toString())){
-                                                  deleteValueList.remove(item.id.toString());
-                                                }
-                                              }
-                                            });
-                                          },
-                                        )),
-                                    (item.memostyle==0)?InkWell(
-                                      borderRadius: BorderRadius.circular(20),
-                                      onTap: () {
-                                      },
-                                      child: Card(
-                                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                                        child: Container(
-                                          height: height*0.7*0.02+height*0.7*0.03*displayHeight,
-                                          width: width*0.8,
-                                          child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                              children: <Widget>[
-                                                Container(
-                                                    child: Column(
-                                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                                        mainAxisAlignment:
-                                                        MainAxisAlignment.spaceAround,
-                                                        children: <Widget>[
-                                                          (display1 ==true)?Container(
-                                                              width:width*0.85*0.7,
-                                                              decoration: BoxDecoration(
-                                                                  border: Border(
-                                                                      bottom: BorderSide(
-                                                                        color: Colors.white,
-                                                                        width:1,
-                                                                      )
-                                                                  )),
-                                                              height: height*0.03*0.7,
-                                                              child:Row(children:<Widget>[SizedBox(width: width*0.05*0.7,),
-                                                                Text(item.title,
-                                                                  style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black54, fontSize: fontsize*adjustsizeh*0.7),
-                                                                )])):Container(),
-                                                          (display2 == true)?Container(
-                                                              height: height*0.025*0.8,
-                                                              child: Row(children:<Widget>[Text(
-                                                                  ' Email:'
-                                                                      +item.email,
-                                                                  style: TextStyle(fontSize:fontsize*adjustsizeh*0.7, color: Colors.black54)),
-                                                                (item.email.length != 0) ?IconButton(icon: Icon(Icons.copy,size: iconsize*adjustsizeh*0.7), onPressed:(){
-                                                                  if(item.email.length != 0){
-                                                                    ClipboardManager.copyToClipBoard(
-                                                                        item.email);}
-                                                                })
-                                                                    :Container(),
-                                                              ])):Container(),
-                                                          (display3 == true)?Container(
-                                                            height: height*0.025*0.7,
-                                                            width: width*0.6*0.8,
-                                                            child: Row(
-                                                              mainAxisAlignment:
-                                                              MainAxisAlignment.start,
-                                                              children: <Widget>[
-                                                                Container(
-                                                                  child: Text(" PASSWORD:",
-                                                                      textAlign: TextAlign.center,
-                                                                      style: TextStyle(
-                                                                          fontSize: fontsize*adjustsizeh*0.7,
-                                                                          fontWeight: FontWeight.w600,
-                                                                          color: Colors.black54)),
-                                                                ),
-                                                                Container(
-                                                                  child:Text(item.pass,
-                                                                    style: TextStyle(
-                                                                        fontSize: fontsize*adjustsizeh*0.7,
-                                                                        fontWeight: FontWeight.bold,
-                                                                        color: Colors.black54),
-                                                                  ),
-                                                                ),
-                                                                (item.pass.length != 0) ?IconButton(
-                                                                  icon: Icon(Icons.copy,size: iconsize*adjustsizeh*0.7),
-                                                                  onPressed: (){
-                                                                    if(item.pass.legth != 0){
-                                                                      ClipboardManager.copyToClipBoard(
-                                                                          item.pass);}
-                                                                  },)
-                                                                    :Container(),
-                                                              ],
-                                                            ),
-                                                          ):Container(),
-                                                          (display4 == true)?Container(
-                                                              height: height*0.02*0.7,
-                                                              width: width*0.65*0.7,
-                                                              child:Row(children: <Widget>[
-                                                                Flexible(
-                                                                  child:Text(' '+item.url,
-                                                                    style: TextStyle(
-                                                                      fontSize: fontsize*adjustsizeh*0.7,
-                                                                      color: Colors.brown[800],
-                                                                    ),
-                                                                    overflow: TextOverflow.ellipsis,
-                                                                    maxLines: 1,
-                                                                  ),
-                                                                ),
-                                                                (item.url.length != 0)?IconButton(icon: Icon(Icons.copy, size: iconsize*adjustsizeh*0.7),
-                                                                  onPressed: (){
-                                                                    if(item.pass.legth != 0){
-                                                                      ClipboardManager.copyToClipBoard(
-                                                                          item.url);}
-                                                                  },)
-                                                                    :Container()
-                                                              ])):Container(),
-                                                          (display5 == true)?Container(
-                                                              height: height*0.02,
-                                                              width: width*0.7,
-                                                              alignment: Alignment.topLeft,
-                                                              child: Row(children: <Widget>
-                                                              [Flexible(
-                                                                  child:Text(' '+item.memo,
-                                                                    style: TextStyle(
-                                                                      fontSize: fontsize*adjustsizeh*0.7,
-                                                                      color: Colors.brown[800],
-                                                                    ),
-                                                                    overflow: TextOverflow.ellipsis,
-                                                                    maxLines: 1,
-                                                                  ),
-                                                                )])
-                                                          ):Container(),
-                                                        ])
-                                                ),
-                                                Container(
-                                                  height: height*0.15*0.7,
-                                                  decoration: BoxDecoration(
-                                                  ),
-                                                  child: Row(children: <Widget>[
-                                                    SizedBox(width: width*0.02*0.7),
-                                                    GestureDetector(
-                                                        onTap: () {
-                                                        },
-                                                        child:(item.favorite==true)?Icon(Icons.favorite,color: Colors.brown[700], size: 30*0.7)
-                                                            :Icon(Icons.favorite_border,color: Colors.brown[700], size: 30*0.7,)
-                                                    ),
-                                                    SizedBox(width: width*0.025*0.7),
-                                                  ]),
-                                                ),
-                                              ]),
-                                        ),
-                                      ),
-                                    )
-                                        :InkWell(
-                                      borderRadius: BorderRadius.circular(20),
-                                      onTap: () {
-                                      },
-                                      child: Card(
-                                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                                        child: Container(
-                                          height: height*0.7*0.02+height*0.7*0.03*displayHeight,
-                                          width: width*0.8,
-                                          child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                              children: <Widget>[
-                                                Container(
-                                                    child: Column(
-                                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                                        mainAxisAlignment:
-                                                        MainAxisAlignment.spaceAround,
-                                                        children: <Widget>[
-                                                          Container(
-                                                              height: height*0.02,
-                                                              width: width*0.7,
-                                                              alignment: Alignment.topLeft,
-                                                              child: Row(children: <Widget>
-                                                              [Flexible(
-                                                                  child:Text(item.memo,
-                                                                    style: TextStyle(
-                                                                      fontSize: fontsize*adjustsizeh*0.7,
-                                                                      color: Colors.brown[800],
-                                                                    ),
-                                                                    overflow: TextOverflow.ellipsis,
-                                                                    maxLines: 1,
-                                                                  ),
-                                                                )])
-                                                          )
-                                                        ])
-                                                ),
-                                                Container(
-                                                  height: height*0.15*0.7,
-                                                  decoration: BoxDecoration(
-                                                  ),
-                                                  child: Row(children: <Widget>[
-                                                    SizedBox(width: width*0.02*0.7),
-                                                    GestureDetector(
-                                                        onTap: () {
-                                                        },
-                                                        child:(item.favorite==true)?Icon(Icons.favorite,color: Colors.brown[700], size: 30*0.7)
-                                                            :Icon(Icons.favorite_border,color: Colors.brown[700], size: 30*0.7,)
-                                                    ),
-                                                    SizedBox(width: width*0.025*0.7),
-                                                  ]),
-                                                ),
-                                              ]),
-                                        ),
-                                      ),
-                                    ),
-                                  ]));
-                                },
-                              );
-                            }
-                          }
-                      )
-                  ),
-                  Container(
-                      height: height*0.1,
-                      width: width*0.7,
-                      padding: EdgeInsets.all(20),
-                      child: ElevatedButton(
-                          onPressed: () {
-                            deleteOn();
-                            setState(() {
-                              deleteon = false;
-                              streamIn();
-                            });
-                          },
-                          style:ElevatedButton.styleFrom(
-                            primary: Colors.brown,
-                          ),
-                          child: Text('DELETE', style: TextStyle(color: Colors.yellow[200])))),
-                ]))
-        )
+                Container(
+                    height: height*0.1,
+                    width: width*0.7,
+                    padding: EdgeInsets.all(20),
+                    child: ElevatedButton(
+                        onPressed: () {
+                          deleteOn();
+                          setState(() {
+                            deleteon = false;
+                            streamIn();
+                          });
+                        },
+                        style:ElevatedButton.styleFrom(
+                          primary: Colors.brown,
+                        ),
+                        child: Text('DELETE', style: TextStyle(color: Colors.yellow[200])))),
+              ]))
+      );
+    }
+
+    return Scaffold(
+        backgroundColor: Colors.cyan[100],
+        appBar: AppBar(
+          elevation: 8,
+          leading:(deleteon==false)?leftIcon():Container(),
+          centerTitle: true,
+          title:Text("PASSWORDLIST",style: TextStyle(color: Colors.yellow[200])),
+          backgroundColor: Colors.brown[800],
+          actions: [
+            rightIcon1(),
+            rightIcon2()
+          ]
+        ),
+        floatingActionButton: (deleteon == false)?floating()
+            :Container(),
+        body: (deleteon == false) ?centerWidget()
+            :centerWidgetD()
     );
   }
 }

@@ -1,4 +1,4 @@
-package com.example.password_storage_for_official
+package com.password_storage_for_official
 
 import io.flutter.embedding.android.FlutterActivity
 

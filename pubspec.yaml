@@ -38,6 +38,13 @@ dependencies:
   clipboard_manager: ^0.0.4
   passcode_screen: ^2.0.0
   shared_preferences: ^2.0.7
+  flutter_launcher_icons: ^0.7.5
+
+
+flutter_icons:
+  ios: true
+  android: true
+  image_path: "assets/Icon.png"
 
 
 dev_dependencies:

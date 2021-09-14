@@ -35,7 +35,7 @@ class _DetailState extends State<Detail> {
   @override
   void initState() {
     isSelected = [true, false];
-    if(widget.argumentmode == 1){
+    if(widget.argumentmode == 1 || widget.argumentmode==2){
       setState(() {
         getdata(widget.id);
       });}else{}
@@ -68,11 +68,13 @@ class _DetailState extends State<Detail> {
     setState(() {
       if(forEdit[0].favorite==0){
         favo=false;
-        print('favo'+favo.toString());
       }else{
-        favo=true;print('favo'+favo.toString());
+        favo=true;
       }
       datagetflg = true;
+      if(widget.argumentmode==2){
+        memostyle=true;
+      }
     });
   }
 
@@ -101,8 +103,8 @@ class _DetailState extends State<Detail> {
     }
   }
 
-   update() async {print('hey');print(favo);print(memostyle);
-    if(favo==false) {if(memostyle==false){print('update0');
+   update() async {
+    if(favo==false) {if(memostyle==false){
     return await DB().update(Item(
         id: widget.id,
         title: titletext0.text,
@@ -112,7 +114,7 @@ class _DetailState extends State<Detail> {
         memo: memotext0.text,
         favorite: 0,
         memostyle: 0,
-        date: DateTime.now().toString()), widget.id);}else{print('update0');
+        date: DateTime.now().toString()), widget.id);}else{
     return await DB().update(Item(
         id: widget.id,
         title: titletext0.text,
@@ -124,7 +126,7 @@ class _DetailState extends State<Detail> {
         memostyle: 1,
         date: DateTime.now().toString()), widget.id);
     }
-    }else if(favo==true){if(memostyle==false){print('update1'+favo.toString());
+    }else if(favo==true){if(memostyle==false){
     return await DB().update(Item(
         id: widget.id,
         title: titletext0.text,
@@ -134,7 +136,7 @@ class _DetailState extends State<Detail> {
         memo: memotext0.text,
         favorite: 1,
         memostyle: 0,
-        date: DateTime.now().toString()), widget.id);}else {print('update12');
+        date: DateTime.now().toString()), widget.id);}else {
     return await DB().update(Item(
         id: widget.id,
         title: titletext0.text,
@@ -165,7 +167,6 @@ class _DetailState extends State<Detail> {
                 date: dataget[0].date),
             widget.id);
         favo=false;
-        print('onoff0enroll true');
       }else{
         DB().update(
             Item(
@@ -180,7 +181,6 @@ class _DetailState extends State<Detail> {
                 date: dataget[0].date),
             widget.id);
         favo=true;
-        print('onoff1enroll false');
       }
     });
   }
@@ -195,23 +195,19 @@ class _DetailState extends State<Detail> {
         backgroundColor: Colors.amber[200],
         appBar: AppBar(
           elevation: 8,
-          leading: Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: (widget.argumentmode == 1) ?IconButton(
-              icon: Icon(Icons.copy),
-              onPressed: () => {
-              },
-            )
-                :Container(),
-          ),
           centerTitle: true,
           title:Text("Detail / Edit ",style: TextStyle(color: Colors.yellow[200])),
           backgroundColor: Colors.brown[800],
           actions: [
-
             Padding(
               padding: const EdgeInsets.all(4.0),
-              child:(widget.argumentmode ==1 && datagetflg == true) ? IconButton(
+              child:(widget.argumentmode ==1 && datagetflg == true)?IconButton(
+                  icon: (favo==false)?Icon(Icons.favorite,color: Colors.white)
+                      :Icon(Icons.favorite, color: Colors.yellow[200]),
+                  onPressed: () => {
+                    favoriteOnOff()
+                  }
+              ):(widget.argumentmode == 2 && datagetflg == true)?IconButton(
                   icon: (favo==false)?Icon(Icons.favorite,color: Colors.white)
                       :Icon(Icons.favorite, color: Colors.yellow[200]),
                   onPressed: () => {
@@ -222,7 +218,8 @@ class _DetailState extends State<Detail> {
             ),
             Padding(
               padding: const EdgeInsets.all(4.0),
-              child: (widget.argumentmode == 1)?IconButton(
+              child: (widget.argumentmode == 1 || widget.argumentmode == 2)?
+              IconButton(
                   icon: Icon(Icons.delete),
                   onPressed: () => {
                     showDialog(
@@ -338,6 +335,7 @@ class _DetailState extends State<Detail> {
                                 height: height*0.075,
                                 width: width*0.85,
                                 child: (widget.argumentmode == 1 && datagetflg == true)?TextFormField( decoration: InputDecoration(
+                                    isDense: true,
                                     labelText: 'title'),
                                     controller: titletext0,
                                     style: TextStyle(
@@ -346,6 +344,7 @@ class _DetailState extends State<Detail> {
                                         color: Colors.brown
                                     ))
                                     :TextFormField( decoration: InputDecoration(
+                                    isDense: true,
                                     labelText: 'title'),
                                     controller: titletext,
                                     style: TextStyle(
@@ -357,6 +356,7 @@ class _DetailState extends State<Detail> {
                                 height: height*0.075,
                                 width: width*0.85,
                                 child: (widget.argumentmode == 1 && datagetflg == true) ?TextFormField( decoration: InputDecoration(
+                                    isDense: true,
                                     labelText: 'id/Email/user name/etc...'),
                                     controller: emailtext0,
                                     style: TextStyle(
@@ -365,6 +365,7 @@ class _DetailState extends State<Detail> {
                                         color: Colors.brown
                                     ))
                                     :TextFormField( decoration: InputDecoration(
+                                    isDense: true,
                                     labelText: 'id/Email/user name/etc...'),
                                     controller: emailtext,
                                     style: TextStyle(
@@ -376,6 +377,7 @@ class _DetailState extends State<Detail> {
                                 height: height*0.08,
                                 width: width*0.85,
                                 child: (widget.argumentmode == 1 && datagetflg == true) ?TextFormField( decoration: InputDecoration(
+                                    isDense: true,
                                     labelText: 'PassWord'),
                                     controller: passtext0,
                                     style: TextStyle(
@@ -384,6 +386,7 @@ class _DetailState extends State<Detail> {
                                         color: Colors.brown
                                     ))
                                     :TextFormField( decoration: InputDecoration(
+                                    isDense: true,
                                     labelText: 'PassWord'),
                                     controller: passtext,
                                     style: TextStyle(
@@ -395,6 +398,7 @@ class _DetailState extends State<Detail> {
                                 height: height*0.075,
                                 width: width*0.85,
                                 child: (widget.argumentmode == 1 && datagetflg == true) ?TextFormField(decoration: InputDecoration(
+                                    isDense: true,
                                     labelText: 'URL'),
                                     controller: urltext0,
                                     style: TextStyle(
@@ -403,6 +407,7 @@ class _DetailState extends State<Detail> {
                                         color: Colors.brown
                                     ))
                                     :TextFormField(decoration: InputDecoration(
+                                    isDense: true,
                                     labelText: 'URL'),
                                     controller: urltext,
                                     style: TextStyle(
@@ -410,11 +415,11 @@ class _DetailState extends State<Detail> {
                                         height: 2.0,
                                         color: Colors.brown
                                     ))),
-
                             Container(
                               height: height*0.15,
                               width: width*0.85,
                               child: (widget.argumentmode == 1 && datagetflg == true) ?TextFormField( decoration: InputDecoration(
+                                  isDense: true,
                                   labelText: 'memo'),
                                   controller: memotext0,
                                   keyboardType: TextInputType.multiline,
@@ -425,6 +430,7 @@ class _DetailState extends State<Detail> {
                                       color: Colors.brown
                                   ))
                                   :TextFormField( decoration: InputDecoration(
+                                  isDense: true,
                                   labelText: 'memo'),
                                   controller: memotext,
                                   keyboardType: TextInputType.multiline,
@@ -433,13 +439,25 @@ class _DetailState extends State<Detail> {
                                       fontSize: TextFieldFontSize*adjustsizeh,
                                       height: 2.0,
                                       color: Colors.brown
-                                  )),)
-                          ],),)
+                                  )))
+                          ]))
                           :Container(
                           alignment: Alignment.topCenter,
                           padding: EdgeInsets.fromLTRB(50, 0, 50, 200),
                           height: height*0.5,
-                          child: TextFormField( decoration: InputDecoration(
+                          child: (widget.argumentmode == 2 && datagetflg == true) ?TextFormField( decoration: InputDecoration(
+                              isDense: true,
+                              labelText: 'memo'),
+                              controller: memotext0,
+                              keyboardType: TextInputType.multiline,
+                              maxLines: 100,
+                              style: TextStyle(
+                                  fontSize: 18*adjustsizeh,
+                                  height: 2.0,
+                                  color: Colors.brown
+                              ))
+                              :TextFormField( decoration: InputDecoration(
+                              isDense: true,
                               labelText: 'memo'),
                               controller: memotext,
                               keyboardType: TextInputType.multiline,
@@ -472,7 +490,6 @@ class _DetailState extends State<Detail> {
                                 height: height*0.05,
                                 width:width*0.3,
                                 child:(widget.argumentmode == 0)?ElevatedButton(onPressed: (){
-                                  print('0');
                                   insert();
                                   Navigator.pop(context);
                                 }, child: Text('OK',style: TextStyle(fontSize: 18*adjustsizeh ,color: Colors.yellow[400])),
@@ -487,7 +504,6 @@ class _DetailState extends State<Detail> {
                                     ))
                                     :ElevatedButton(onPressed: (){
                                         update();
-                                        print('Fini');
                                   Navigator.pop(context);
                                 }, child: Text('OK',style: TextStyle(fontSize: 18*adjustsizeh ,color: Colors.yellow[400])),
                                     style:  ElevatedButton.styleFrom(
